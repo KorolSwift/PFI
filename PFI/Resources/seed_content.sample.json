@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f601",
+      "title": "Swift Language",
+      "slug": "swift-language",
+      "order": 1,
+      "iconName": "swift",
+      "subtopics": [
+        {
+          "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f602",
+          "title": "Типы",
+          "slug": "types",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f603",
+      "title": "Memory Management",
+      "slug": "memory-management",
+      "order": 2,
+      "iconName": "memorychip",
+      "subtopics": [
+        {
+          "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f604",
+          "title": "ARC",
+          "slug": "arc",
+          "order": 1
+        }
+      ]
+    },
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f605",
+      "title": "Concurrency",
+      "slug": "concurrency",
+      "order": 3,
+      "iconName": "arrow.triangle.branch",
+      "subtopics": [
+        {
+          "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f606",
+          "title": "Основы",
+          "slug": "basics",
+          "order": 1
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f611",
+      "order": 1,
+      "topicSlug": "swift-language",
+      "subtopicSlug": "types",
+      "level": "junior",
+      "tags": ["struct", "class"],
+      "text": "В чём разница между struct и class?",
+      "answerMarkdown": "`struct` — значимый тип, `class` — ссылочный.\n\n| | struct | class |\n|---|---|---|\n| Семантика | копирование | ссылка |\n| Наследование | нет | есть |\n| Хранение | чаще на стеке | на куче |\n| Изменяемость | нужен `mutating` | не нужен |\n\n```swift\nstruct Point { var x = 0 }\nvar a = Point()\nvar b = a      // копия\nb.x = 10       // a.x всё ещё 0\n```\n\n**Когда что выбирать.** По умолчанию `struct`: копирование делает поведение предсказуемым, нет общего состояния — нет и целого класса ошибок. `class` берут, когда нужна идентичность объекта, наследование или совместимость с Objective-C API."
+    },
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f612",
+      "order": 2,
+      "topicSlug": "memory-management",
+      "subtopicSlug": "arc",
+      "level": "middle",
+      "tags": ["arc", "memory"],
+      "text": "Что такое ARC и чем он отличается от сборщика мусора?",
+      "answerMarkdown": "**ARC** (Automatic Reference Counting) — подсчёт ссылок, который компилятор расставляет на этапе компиляции. Объект хранит счётчик сильных ссылок; когда счётчик доходит до нуля, память освобождается немедленно.\n\nОтличия от garbage collection:\n\n- ARC работает **детерминированно** — момент освобождения предсказуем\n- Нет отдельного потока сборщика и пауз на сборку\n- Накладные расходы размазаны по коду, а не собраны в паузы\n- Плата за это — **циклы сильных ссылок** ARC разрывать не умеет\n\n```swift\nfinal class Node {\n    var next: Node?          // сильная ссылка\n    weak var parent: Node?   // слабая, не увеличивает счётчик\n}\n```"
+    },
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f613",
+      "order": 3,
+      "topicSlug": "concurrency",
+      "subtopicSlug": "basics",
+      "level": "middle",
+      "tags": ["concurrency", "actor"],
+      "text": "Что такое race condition и как её избежать?",
+      "answerMarkdown": "**Race condition** возникает, когда два потока обращаются к одному участку памяти, хотя бы один из них пишет, и нет синхронизации.\n\n```swift\nfinal class Counter { var value = 0 }\n// поток A и поток B одновременно: counter.value += 1\n// ожидаем 2, получаем 1\n```\n\n`value += 1` — три операции: прочитать, прибавить, записать. Потоки могут прочитать одно и то же значение и записать одинаковый результат.\n\n**Чем опасна:** воспроизводится недетерминированно, не ловится тестами, под отладчиком исчезает.\n\n**Как избежать в современном Swift** — изолировать состояние в акторе:\n\n```swift\nactor Counter {\n    private var value = 0\n    func increment() { value += 1 }\n}\n\nawait counter.increment()\n```\n\nАктор гарантирует, что его состояние в любой момент трогает только один поток. В Swift 6 компилятор проверяет это статически: небезопасная передача данных становится ошибкой компиляции, а не багом в проде."
+    }
+  ],
+  "tasks": [
+    {
+      "id": "8f2a1c34-5d6e-5f70-8a91-b2c3d4e5f621",
+      "order": 1,
+      "topicSlug": "swift-language",
+      "subtopicSlug": "types",
+      "difficulty": "easy",
+      "tags": ["algorithms"],
+      "title": "Найти первый неповторяющийся символ",
+      "statementMarkdown": "Дана строка. Вернуть первый символ, который встречается в ней ровно один раз, или `nil`, если такого нет.\n\n```\n\"swift\"      → \"s\"\n\"aabbcc\"     → nil\n\"aabbc\"      → \"c\"\n```\n\nОценить сложность решения по времени и памяти.",
+      "hints": [
+        "Наивное решение — для каждого символа пройти всю строку заново. Какая у него сложность?",
+        "Можно ли обойтись двумя проходами вместо вложенного цикла?",
+        "Словарь символ → количество даёт подсчёт за один проход. Второй проход находит первый с количеством 1."
+      ],
+      "referenceSolution": "func firstUnique(in text: String) -> Character? {\n    var counts: [Character: Int] = [:]\n    for character in text {\n        counts[character, default: 0] += 1\n    }\n    return text.first { counts[$0] == 1 }\n}\n\n// Время: O(n) — два прохода по строке.\n// Память: O(k), где k — размер алфавита.",
+      "mySolution": "",
+      "solvedIndependently": false
+    }
+  ]
+}
