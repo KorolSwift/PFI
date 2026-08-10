@@ -33,6 +33,10 @@ disabled_rules:
 
   - todo
 
+  # Правило старше Swift 5.3: с тех пор несколько trailing-замыканий — штатный синтаксис.
+  # Мешает идиоматичному Button { action } label: { view } и .overlay { } .background { }.
+  - multiple_closures_with_trailing_closure
+
 
 
 line_length:
