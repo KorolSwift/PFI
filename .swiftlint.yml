@@ -69,3 +69,19 @@ file_length:
 
   warning: 400
 
+
+
+# Список терминов задан заново, без «master»: у нас «mastered» — про освоение материала
+# (SM-2), к терминологии master/slave отношения не имеет. Имя закреплено в Asset Catalog
+# (Status colors) и дальше уйдёт в модель данных. Опции allowed_terms в правиле нет —
+# единственный способ снять один термин — перечислить остальные через override_terms.
+inclusive_language:
+
+  override_terms:
+
+    - slave
+
+    - blacklist
+
+    - whitelist
+
