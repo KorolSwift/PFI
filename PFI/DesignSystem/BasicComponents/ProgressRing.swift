@@ -20,7 +20,7 @@ struct ProgressRing: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(.pfiSeparator, style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .stroke(.pfiSeparator, style: StrokeStyle(lineWidth: 5, lineCap: .round)) // толщина из макета
             Circle()
                 .trim(from: 0.0, to: currentProgress)
                 .stroke(.pfiAccent, style: StrokeStyle(lineWidth: 5, lineCap: .round))

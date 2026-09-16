@@ -73,7 +73,7 @@ struct PFIButtonStyle: ButtonStyle {
 
         var body: some View {
             configuration.label
-                .padding(.vertical, 13)
+                .padding(.vertical, 13) // значение отсутствует в Spacing
                 .padding(.horizontal, Spacing.sp20)
                 .frame(maxWidth: .infinity, minHeight: 44)
                 .background(backgroundColor, in: shape)
