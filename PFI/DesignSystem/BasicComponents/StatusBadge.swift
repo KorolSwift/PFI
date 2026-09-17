@@ -78,26 +78,6 @@ extension StatusBadge where Content == Text {
     }
 }
 
-#Preview("Светлая") {
-    VStack(alignment: .leading, spacing: Spacing.sp16) {
-        Text("Без заливки")
-            .font(.pfiCaption)
-            .foregroundStyle(Color(.pfiTextSecondary))
-        HStack(spacing: Spacing.sp8) {
-            ForEach(StatusBadge.Variant.allCases, id: \.self) { StatusBadge(variant: $0) }
-        }
-        Text("С заливкой")
-            .font(.pfiCaption)
-            .foregroundStyle(Color(.pfiTextSecondary))
-        HStack(spacing: Spacing.sp8) {
-            ForEach(StatusBadge.Variant.allCases, id: \.self) { StatusBadge(variant: $0, filled: true) }
-        }
-    }
-    .padding(Spacing.sp16)
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-    .background(Color(.pfiBackground))
-}
-
 private struct BadgeGallery: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.sp16) {
@@ -118,9 +98,8 @@ private struct BadgeGallery: View {
         .padding(Spacing.sp16)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color(.pfiBackground))
-        .preferredColorScheme(.dark)
     }
 }
 
-#Preview("Тёмная") { BadgeGallery() }
-#Preview("Тёмная") { BadgeGallery().preferredColorScheme(.dark)}
+#Preview("Светлая") { BadgeGallery() }
+#Preview("Тёмная") { BadgeGallery().preferredColorScheme(.dark) }
