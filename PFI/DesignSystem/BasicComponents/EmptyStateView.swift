@@ -45,6 +45,8 @@ struct EmptyStateView: View {
 
     let variant: Variant
     var action: Action?
+    @ScaledMetric(relativeTo: .caption)
+    private var subtitleMaxWidth: CGFloat = 240 // по спецификации 30ch, что примерно 220–240 pt
 
     var body: some View {
         VStack(spacing: Spacing.sp8) {
@@ -62,7 +64,7 @@ struct EmptyStateView: View {
                 .font(.pfiHeadline)
                 .foregroundStyle(.pfiTextPrimary)
             Text(description)
-                .frame(maxWidth: 240) // по спецификации 30ch, что примерно 220–240 pt
+                .frame(maxWidth: subtitleMaxWidth)
                 .font(.pfiCaption)
                 .foregroundStyle(.pfiTextSecondary)
             if let action {

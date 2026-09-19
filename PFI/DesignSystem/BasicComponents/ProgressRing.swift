@@ -19,9 +19,10 @@ struct ProgressRing: View {
 
     var body: some View {
         ZStack {
+            Circle() // толщина 5 — из спецификации
+                .strokeBorder(.pfiSeparator, style: StrokeStyle(lineWidth: 5, lineCap: .round))
             Circle()
-                .stroke(.pfiSeparator, style: StrokeStyle(lineWidth: 5, lineCap: .round)) // толщина из спецификации
-            Circle()
+                .inset(by: 2.5) // половина толщины: рисуем внутрь рамки, как strokeBorder
                 .trim(from: 0.0, to: currentProgress)
                 .stroke(.pfiAccent, style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .rotationEffect(Angle(degrees: -90))
@@ -57,6 +58,8 @@ private struct PercentLabel: ViewModifier, Animatable {
             Text("\(Int((value * 100).rounded()))")
                 .font(.pfiCode.weight(.semibold))
                 .foregroundStyle(.pfiTextPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
         }
     }
 }

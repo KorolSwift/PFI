@@ -16,26 +16,26 @@ struct PFICard<Content: View>: View {
     }
 
     var body: some View {
-        content
-            .padding(Spacing.sp16)
-            .background(Color(.pfiSurface), in: shape)
-            .overlay {
-                shape.strokeBorder(Color(.pfiSeparator), lineWidth: 1)
-            }
+        VStack(alignment: .leading, spacing: Spacing.sp8) {
+            content
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(Spacing.sp16)
+        .background(Color(.pfiSurface), in: shape)
+        .overlay {
+            shape.strokeBorder(Color(.pfiSeparator), lineWidth: 1)
+        }
     }
 }
 
 #Preview("Светлая") {
     PFICard {
-        VStack(alignment: .leading, spacing: Spacing.sp8) {
-            Text("Тема 1")
-                .font(.pfiHeadline)
-                .foregroundStyle(Color(.pfiTextPrimary))
-            Text("48 вопросов · 30 изучено")
-                .font(.pfiCaption)
-                .foregroundStyle(Color(.pfiTextSecondary))
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        Text("Тема 1")
+            .font(.pfiHeadline)
+            .foregroundStyle(Color(.pfiTextPrimary))
+        Text("48 вопросов · 30 изучено")
+            .font(.pfiCaption)
+            .foregroundStyle(Color(.pfiTextSecondary))
     }
     .padding(Spacing.sp16)
     .frame(maxHeight: .infinity)
@@ -44,15 +44,12 @@ struct PFICard<Content: View>: View {
 
 #Preview("Тёмная") {
     PFICard {
-        VStack(alignment: .leading, spacing: Spacing.sp8) {
-            Text("Тема 1")
-                .font(.pfiHeadline)
-                .foregroundStyle(Color(.pfiTextPrimary))
-            Text("48 вопросов · 30 изучено")
-                .font(.pfiCaption)
-                .foregroundStyle(Color(.pfiTextSecondary))
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        Text("Тема 1")
+            .font(.pfiHeadline)
+            .foregroundStyle(Color(.pfiTextPrimary))
+        Text("48 вопросов · 30 изучено")
+            .font(.pfiCaption)
+            .foregroundStyle(Color(.pfiTextSecondary))
     }
     .padding(Spacing.sp16)
     .frame(maxHeight: .infinity)

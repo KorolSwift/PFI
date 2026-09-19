@@ -46,6 +46,8 @@ struct PFITopicChipStyle: ButtonStyle {
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
                 .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
         }
     }
 }

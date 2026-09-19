@@ -9,10 +9,10 @@ import SwiftUI
 
 struct StatusBadge<Content: View>: View {
     enum Variant: String, CaseIterable {
-        case viewed = "Открыт"
         case new = "Новый"
-        case mastered = "Знаю"
+        case viewed = "Открыт"
         case learning = "Учу"
+        case mastered = "Знаю"
     }
 
     let filled: Bool
@@ -57,6 +57,8 @@ struct StatusBadge<Content: View>: View {
             Image(systemName: symbolName)
                 .imageScale(.small)
             content
+                .lineLimit(1)
+                .fixedSize(horizontal: true, vertical: false)
         }
         .padding(.vertical, Spacing.sp4)
         .padding(.horizontal, Spacing.sp8)
@@ -78,28 +80,21 @@ extension StatusBadge where Content == Text {
     }
 }
 
-private struct BadgeGallery: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.sp16) {
-            Text("Без заливки")
-                .font(.pfiCaption)
-                .foregroundStyle(Color(.pfiTextSecondary))
-            HStack(spacing: Spacing.sp8) {
-                ForEach(StatusBadge.Variant.allCases, id: \.self) { StatusBadge(variant: $0) }
-            }
-
-            Text("С заливкой")
-                .font(.pfiCaption)
-                .foregroundStyle(Color(.pfiTextSecondary))
-            HStack(spacing: Spacing.sp8) {
-                ForEach(StatusBadge.Variant.allCases, id: \.self) { StatusBadge(variant: $0, filled: true) }
-            }
-        }
-        .padding(Spacing.sp16)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(Color(.pfiBackground))
+#Preview("Светлая") {
+    HStack(spacing: Spacing.sp8) {
+        ForEach(StatusBadge.Variant.allCases, id: \.self) { StatusBadge(variant: $0) }
     }
+    .padding(Spacing.sp16)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color(.pfiBackground))
 }
 
-#Preview("Светлая") { BadgeGallery() }
-#Preview("Тёмная") { BadgeGallery().preferredColorScheme(.dark) }
+#Preview("Тёмная") {
+    HStack(spacing: Spacing.sp8) {
+        ForEach(StatusBadge.Variant.allCases, id: \.self) { StatusBadge(variant: $0, filled: true) }
+    }
+    .padding(Spacing.sp16)
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color(.pfiBackground))
+    .preferredColorScheme(.dark)
+}
