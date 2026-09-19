@@ -11,7 +11,11 @@ import SwiftUI
 struct PFIApp: App {
     var body: some Scene {
         WindowGroup {
+            #if DEBUG
+            ComponentGalleryView()
+            #else
             ContentView()
+            #endif
         }
     }
 }
